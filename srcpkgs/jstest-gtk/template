@@ -1,0 +1,20 @@
+# Template file for 'jstest-gtk'
+pkgname=jstest-gtk
+version=0.1.0
+revision=1
+build_style=cmake
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="gtkmm-devel libsigc++-devel pkg-config"
+makedepends=""
+depends=""
+short_desc="Simple joystick tester based on Gtk+"
+maintainer="xinoip <xinoip@proton.me>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/Grumbel/jstest-gtk"
+#changelog=""
+distfiles="https://github.com/Grumbel/jstest-gtk/archive/refs/heads/master.tar.gz"
+checksum=d9169cd6f31e9ef66ecd350671492b1e3bb5d9623dcfeb1e949f122262d0fdd3

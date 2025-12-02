@@ -25,4 +25,4 @@ etc/xbps.d/custom
 etc/repo-keys
 
 # personal stuff
-!/personal_update.sh
+!/personal/

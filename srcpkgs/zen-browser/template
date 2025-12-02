@@ -1,5 +1,5 @@
 pkgname=zen-browser
-version=1.17.10b
+version=1.17.12b
 revision=1
 archs="x86_64"
 hostmakedepends="tar xz"
@@ -8,7 +8,7 @@ maintainer="pio"
 license="MPL-2.0"
 homepage="https://github.com/zen-browser/desktop"
 distfiles="https://github.com/zen-browser/desktop/releases/download/${version}/zen.linux-x86_64.tar.xz"
-checksum=b5eb0a384e7bc6096d98482708467978de8822e89aa7ecaca45b73f54d38f11f
+checksum=cae97299622a6ef3fd8c06ff3494f8625094467ac5ac48ee63a81a0ac67fa14d
 
 do_install() {
     # directories

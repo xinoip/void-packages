@@ -17,5 +17,5 @@ sed -i "s/^revision=.*/revision=1/" "$TEMPLATE"
 xgensum -fi "$TEMPLATE"
 echo "Checksum updated."
 
-./xbps-src pkg "$TEMPLATE"
+./xbps-src pkg zen-browser
 xi zen-browser

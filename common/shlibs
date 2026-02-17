@@ -3157,7 +3157,7 @@ libdockapp.so.3 libdockapp-0.7.2_1
 libkrdccore.so.5 krdc-17.04.3_1
 libgutenprint.so.9 gutenprint-5.3.3_1
 libunbound.so.8 libunbound-1.13.1_2
-libmirage.so.11 libmirage-3.1.0_1
+libmirage.so.12 libmirage-3.3.0_1
 libwkhtmltox.so.0 libwkhtmltopdf-0.12.5_1
 libsysprof-6.so.6 libsysprof-45.1_1
 libvala-0.56.so.0 libvala-0.56.0_1

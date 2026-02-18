@@ -10,7 +10,7 @@ maintainer="Duncaen <duncaen@voidlinux.org>"
 license="BSD-3-Clause"
 homepage="https://gn.googlesource.com/gn"
 distfiles="https://gn.googlesource.com/gn/+archive/${_ref}.tar.gz"
-checksum=4d54a4fc7f24a8b044a0a9b8642d9ce0f3930a79a4e5b925401e3419fae6d6fa
+checksum=@d00083bc3765cecfe6546b639ec2a3c14fffd39fc3016eb8ef1ee6cdd5ce3454
 
 do_configure() {
 	cat <<-EOF >src/gn/last_commit_position.h

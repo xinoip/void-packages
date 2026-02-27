@@ -1,6 +1,6 @@
 # Template file for 'mame'
 pkgname=mame
-version=0282
+version=0285
 revision=1
 hostmakedepends="pkg-config python3 qt6-base"
 makedepends="qt6-base-devel SDL2_ttf-devel libutf8proc-devel libgomp-devel
@@ -11,7 +11,7 @@ maintainer="Orphaned <orphan@voidlinux.org>"
 license="GPL-2.0-or-later"
 homepage="https://mamedev.org"
 distfiles="https://github.com/mamedev/mame/archive/refs/tags/mame${version}.tar.gz"
-checksum=730d6264f0851de521ca03b71f8556f2b31b8f06d415b52d1ba31aafff9f6c3f
+checksum=2b7ed1553ddf434692f62ded87b296931968d55e15f786a8588102880851f41c
 nodebug=yes
 replaces="sdlmame>=0 sdlmess>=0"
 

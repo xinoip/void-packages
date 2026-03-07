@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-LAST_PWD=$(pwd)
-cd ~/3pp/void-packages || exit 1
+set -euo pipefail
 
-./personal/bump_zen.sh
+readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-cd "$LAST_PWD" || exit 1
+# "$SCRIPT_DIR/bump_zen.sh"
+"$SCRIPT_DIR/bump_brave.sh"

@@ -1,0 +1,30 @@
+# Template file for 'ggoled'
+pkgname=ggoled
+version=0.0.0~git20260218
+_gitrev=086a0b0f20b4d7f963442599d9ce8db40cad3a77
+revision=1
+build_style=cargo
+make_build_args="--package ggoled --package ggoled_app"
+hostmakedepends="pkg-config"
+makedepends="eudev-libudev-devel SDL3-devel"
+short_desc="Put graphics on SteelSeries Arctis Nova Pro OLED screen"
+maintainer="xinoip <xinoip@proton.me>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/JerwuQu/ggoled"
+distfiles="https://github.com/JerwuQu/ggoled/archive/${_gitrev}.tar.gz>${pkgname}-${version}.tar.gz"
+checksum=9572906ee8810839110fe1538750de0f6c9fd3be5d8ddccdb51408ce4631b603
+
+post_install() {
+	vinstall "${wrksrc}"/11-steelseries-arctis-nova.rules 0644 /usr/lib/udev/rules.d
+}
+
+do_install() {
+	cargo install ${XBPS_VERBOSE+${make_verbose}} --target ${RUST_TARGET} --root="${DESTDIR}/usr" \
+		--offline --locked --path ggoled_cli
+	cargo install ${XBPS_VERBOSE+${make_verbose}} --target ${RUST_TARGET} --root="${DESTDIR}/usr" \
+		--offline --locked --path ggoled_app
+
+	rm -f "${DESTDIR}"/usr/.crates.toml
+	rm -f "${DESTDIR}"/usr/.crates2.json
+}
+

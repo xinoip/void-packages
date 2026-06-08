@@ -24,7 +24,7 @@ main() {
 	sed -i "s/^version=.*/version=${VERSION_LATEST}/" "$TEMPLATE"
 	sed -i "s/^revision=.*/revision=1/" "$TEMPLATE"
 
-	source ./repkg.sh "$PACKAGE"
+	./repkg.sh "$PACKAGE"
 }
 
 main "$@"

@@ -5,6 +5,7 @@ cd "$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 main() {
 	cd ..
+	git pull origin master
 	git pull upstream master
 	./personal/bump_all.sh
 	xi -Su

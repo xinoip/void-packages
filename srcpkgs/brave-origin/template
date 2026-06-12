@@ -1,5 +1,5 @@
 pkgname=brave-origin
-version=1.93.50
+version=1.93.56
 revision=1
 only_for_archs="x86_64"
 short_desc="new brave browser"
@@ -8,7 +8,7 @@ hostmakedepends="tar xz"
 license="Mozilla Public License Version 2.0"
 homepage="https://brave.com"
 distfiles="https://brave-browser-apt-nightly.s3.brave.com/pool/main/b/brave-origin-nightly/brave-origin-nightly_${version}_amd64.deb"
-checksum=dcc36e513b423ea39072a4c5dba434a3952879a7fd12ec859a6543aa61f20759
+checksum=5ea547edbe08301dc3c9734adad42cafea04c1045a77af874a9d255fed160061
 nostrip=yes
 
 do_extract() {

@@ -5,6 +5,7 @@ cd "$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 main() {
 	./repkg.sh brave-origin
+	./repkg.sh mullvad-vpn
 }
 
 main "$@"

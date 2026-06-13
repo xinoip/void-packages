@@ -5,6 +5,7 @@ cd "$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 
 main() {
 	./bump_brave_origin.sh
+	echo "mullvad-vpn: Not bumped. Check manually."
 }
 
 main "$@"

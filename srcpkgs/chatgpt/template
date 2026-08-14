@@ -1,0 +1,28 @@
+# Template file for 'chatgpt'
+pkgname=chatgpt
+version=26.803.81509
+revision=1
+archs="x86_64"
+depends="alsa-lib at-spi2-atk at-spi2-core dbus-libs desktop-file-utils
+ eudev-libudev expat git glib gtk+3 libX11 libXcomposite libXdamage libXext
+ libXfixes libXrandr libcups libdrm libgbm libglvnd libnotify libsecret libstdc++
+ libusb libxcb libxkbcommon nss xdg-utils"
+short_desc="ChatGPT desktop app with Codex"
+maintainer="Orphaned <orphan@voidlinux.org>"
+license="custom:Proprietary"
+homepage="https://developers.openai.com/codex/app"
+distfiles="https://persistent.oaistatic.com/codex-app-prod/linux/deb/pool/main/c/chatgpt/chatgpt_${version}_amd64.deb"
+checksum=a9bf91a368f9f7c4eea38082a9fb8fb46b8d005b719a6d7715d2e5a1982c38eb
+repository=nonfree
+restricted=yes
+nostrip=yes
+noshlibprovides=yes
+noverifyrdeps=yes
+
+do_install() {
+	vcopy usr/bin usr
+	vcopy usr/lib/chatgpt usr/lib
+	vinstall usr/share/applications/chatgpt.desktop 644 usr/share/applications
+	vinstall usr/share/pixmaps/chatgpt.png 644 usr/share/pixmaps
+	vlicense usr/share/doc/chatgpt/copyright
+}

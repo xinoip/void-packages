@@ -17,6 +17,7 @@ main() {
 	yesno "Repkg brave-origin?" && ./repkg.sh brave-origin
 	yesno "Repkg mullvad-vpn?" && ./repkg.sh mullvad-vpn
 	yesno "Repkg android-studio?" && ./repkg.sh android-studio
+	yesno "Repkg chatgpt?" && ./repkg.sh chatgpt
 }
 
 main "$@"

@@ -1,0 +1,41 @@
+# Template file for 'opencloud-desktop'
+pkgname=opencloud-desktop
+version=4.0.0
+revision=1
+archs="x86_64"
+depends="bash ca-certificates coreutils desktop-file-utils fontconfig glibc
+ libEGL libX11 libdrm libgbm libgcc libglvnd libstdc++ libxcb wayland xdg-utils"
+short_desc="OpenCloud desktop synchronization client"
+maintainer="xinoip <xinoip@proton.me>"
+license="GPL-2.0-or-later"
+homepage="https://opencloud.eu"
+changelog="https://github.com/opencloud-eu/desktop/releases"
+distfiles="https://github.com/opencloud-eu/desktop/releases/download/v${version}/OpenCloud_Desktop-v${version}-linux-gcc-x86_64.AppImage"
+checksum=22c5fac4453ce2bfb033f4a4f288aea33bbdc1178518026973f76b1c5c4e1d2c
+# Preserve the upstream bundle and keep its private libraries out of shlibs.
+nostrip=yes
+noshlibprovides=yes
+noverifyrdeps=yes
+nocross="AppImage extraction executes the x86_64 runtime"
+# This binary-only package needs no build dependencies. Leave runtime dependency
+# resolution to xbps-install instead of building packages such as Mesa here.
+export XBPS_SKIP_DEPS=yes
+
+do_extract() {
+	cp ${XBPS_SRCDISTDIR}/${pkgname}-${version}/OpenCloud_Desktop-v${version}-linux-gcc-x86_64.AppImage opencloud.AppImage
+	chmod +x opencloud.AppImage
+	./opencloud.AppImage --appimage-extract >/dev/null
+}
+
+do_install() {
+	vmkdir opt/${pkgname}
+	vcopy "squashfs-root/*" opt/${pkgname}
+	vbin ${FILESDIR}/opencloud
+	vmkdir usr/bin
+	ln -s /opt/${pkgname}/usr/bin/opencloudcmd ${DESTDIR}/usr/bin/opencloudcmd
+
+	vinstall squashfs-root/opencloud.desktop 644 usr/share/applications
+	vmkdir usr/share/icons
+	vcopy squashfs-root/usr/share/icons/hicolor usr/share/icons
+	vcopy squashfs-root/usr/share/metainfo usr/share
+}

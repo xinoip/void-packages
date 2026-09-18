@@ -7,6 +7,7 @@ main() {
 	./bump_brave_origin.sh
 	echo "mullvad-vpn: Not bumped. Check manually."
 	echo "chatgpt: Not bumped. Check manually."
+	echo "opencloud-desktop: Not bumped. Check manually."
 }
 
 main "$@"

@@ -18,6 +18,7 @@ main() {
 	yesno "Repkg mullvad-vpn?" && ./repkg.sh mullvad-vpn
 	yesno "Repkg android-studio?" && ./repkg.sh android-studio
 	yesno "Repkg chatgpt?" && ./repkg.sh chatgpt
+	yesno "Repkg opencloud-desktop?" && ./repkg.sh opencloud-desktop
 }
 
 main "$@"

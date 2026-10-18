@@ -25,6 +25,8 @@ main() {
 	sed -i "s/^revision=.*/revision=1/" "$TEMPLATE"
 
 	./repkg.sh "$PACKAGE"
+	git add ../srcpkgs/brave-origin/template
+	git commit -m "personal: bump brave-origin"
 }
 
 main "$@"

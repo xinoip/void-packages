@@ -1,9 +1,10 @@
-.PHONY: help prepare bootstrap update update-upstream build build-all install install-all checksum bump-all clean
+.PHONY: help prepare bootstrap update update-origin update-upstream build build-all install install-all checksum bump-all clean
 
 help:
 	@echo 'make prepare                  Link custom templates and supporting files'
 	@echo 'make bootstrap                Bootstrap xbps-src'
-	@echo 'make update                   Pull upstream, bump packages, install updates'
+	@echo 'make update                   Pull origin and upstream, bump packages, install updates'
+	@echo 'make update-origin            Pull changes from your fork'
 	@echo 'make update-upstream          Pull changes from upstream'
 	@echo 'make build PKG=name           Build a package'
 	@echo 'make build-all                Build all custom packages'
@@ -24,10 +25,14 @@ prepare:
 bootstrap:
 	cd .. && ./xbps-src binary-bootstrap
 
+update-origin:
+	cd .. && git pull origin master
+
 update-upstream:
 	cd .. && git pull upstream master
 
 update:
+	$(MAKE) update-origin
 	$(MAKE) update-upstream
 	$(MAKE) bump-all
 	$(MAKE) install-all

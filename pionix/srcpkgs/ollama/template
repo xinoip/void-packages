@@ -1,0 +1,38 @@
+# Template file for 'ollama'
+pkgname=ollama
+version=0.40.14
+revision=1
+archs="x86_64"
+_llama_version=b11963
+build_style=cmake
+build_helper=go
+build_wrksrc="ollama-${version}"
+configure_args="-DOLLAMA_VERSION=${version} -DOLLAMA_LLAMA_BACKENDS=vulkan
+ -DOLLAMA_LIB_DIR=lib/ollama
+ -DFETCHCONTENT_SOURCE_DIR_LLAMA_CPP=${XBPS_BUILDDIR}/${pkgname}-${version}/llama.cpp-${_llama_version}"
+hostmakedepends="go git pkg-config shaderc"
+makedepends="SPIRV-Headers vulkan-loader-devel"
+depends="ca-certificates"
+short_desc="Run large language models locally with AMD Vulkan acceleration"
+maintainer="xinoip <xinoip@proton.me>"
+license="MIT"
+homepage="https://ollama.com"
+changelog="https://github.com/ollama/ollama/releases"
+distfiles="https://github.com/ollama/ollama/archive/refs/tags/v${version}.tar.gz
+ https://github.com/ggml-org/llama.cpp/archive/refs/tags/${_llama_version}.tar.gz"
+checksum="cc5c0c0320a1e8763dd62a06b334858084123fe5b394a2a58a5979e3ac6317a5
+ 4fc376548691756dad5d3f71ac7024c8ec831c7a40c1b4af946e5db234dab6bb"
+noshlibprovides=yes
+
+export GOFLAGS="-buildmode=pie"
+
+post_patch() {
+	cd ${wrksrc}/llama.cpp-${_llama_version}
+	cmake -DPATCH_DIR=${wrksrc}/${build_wrksrc}/llama/compat \
+		-P ${wrksrc}/${build_wrksrc}/cmake/apply-git-patches.cmake
+}
+
+do_install() {
+	DESTDIR=${DESTDIR} cmake --install build --prefix /usr
+	vlicense LICENSE
+}

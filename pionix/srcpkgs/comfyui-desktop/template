@@ -1,0 +1,41 @@
+# Template file for 'comfyui-desktop'
+pkgname=comfyui-desktop
+version=1.1.8
+revision=1
+archs="x86_64"
+depends="alsa-lib at-spi2-atk at-spi2-core bash ca-certificates cairo dbus-libs
+ desktop-file-utils eudev-libudev expat glib gtk+3 libX11 libXcomposite
+ libXdamage libXext libXfixes libXrandr libcups libdrm libgbm libgcc
+ libglvnd libnotify libstdc++ libxcb libxkbcommon nspr nss pango xdg-utils"
+short_desc="Desktop application for managing ComfyUI installations"
+maintainer="xinoip <xinoip@proton.me>"
+license="AGPL-3.0-or-later"
+homepage="https://www.comfy.org"
+changelog="https://github.com/Comfy-Org/Comfy-Desktop/releases"
+distfiles="https://dl.todesktop.com/241130tqe9q3y/versions/${version}/linux/appImage/x64>Comfy-Desktop-${version}-x86_64.AppImage"
+checksum=3f3d4b710ecd7f6c0d3a4bb45a1d0cd8a5f5aa8f4d053975580a3de1ebb750a7
+nostrip=yes
+noshlibprovides=yes
+noverifyrdeps=yes
+python_version=ignore
+nocross="AppImage extraction executes the x86_64 runtime"
+# Resolve runtime dependencies when installing, without rebuilding Mesa here.
+export XBPS_SKIP_DEPS=yes
+
+do_extract() {
+	cp ${XBPS_SRCDISTDIR}/${pkgname}-${version}/Comfy-Desktop-${version}-x86_64.AppImage comfyui.AppImage
+	chmod +x comfyui.AppImage
+	./comfyui.AppImage --appimage-extract >/dev/null
+}
+
+do_install() {
+	vsed -i 's/^Exec=AppRun /Exec=comfyui-desktop /' squashfs-root/comfyui-desktop-2.desktop
+	vmkdir opt/${pkgname}
+	vcopy "squashfs-root/*" opt/${pkgname}
+	vbin ${FILESDIR}/comfyui-desktop
+	vinstall squashfs-root/comfyui-desktop-2.desktop 644 usr/share/applications ${pkgname}.desktop
+	vmkdir usr/share/icons
+	vcopy squashfs-root/usr/share/icons/hicolor usr/share/icons
+	vlicense ${FILESDIR}/LICENSE
+	chmod -R a+rX ${DESTDIR}
+}

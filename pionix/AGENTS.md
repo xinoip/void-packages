@@ -1,6 +1,8 @@
 # Instructions
 
 - Never create commits, stage changes, or push to remote repositories.
+  Exception: the requested automated commit in `scripts/bump-brave.sh` is
+  allowed when the updater runs; it must include only the Brave template.
 - Keep this personal repository simple. Write for the happy path; unusual
   failures and edge cases will be handled manually.
 - Use tool defaults. Do not add declarations just to make defaults explicit. For

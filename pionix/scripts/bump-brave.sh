@@ -13,4 +13,5 @@ fi
 
 sed -i -e "s/^version=.*/version=$latest/" -e 's/^revision=.*/revision=1/' "$template"
 make checksum PKG=brave-origin
+git commit --only -m "new: update brave-origin $current -> $latest" -- "$template"
 echo "brave-origin: $current -> $latest"

@@ -36,6 +36,6 @@ do_install() {
 	vinstall squashfs-root/comfyui-desktop-2.desktop 644 usr/share/applications ${pkgname}.desktop
 	vmkdir usr/share/icons
 	vcopy squashfs-root/usr/share/icons/hicolor usr/share/icons
-	vlicense ${FILESDIR}/LICENSE
+	# vlicense ${FILESDIR}/LICENSE
 	chmod -R a+rX ${DESTDIR}
 }

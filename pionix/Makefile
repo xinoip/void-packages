@@ -1,68 +1,35 @@
-.PHONY: help prepare bootstrap update update-origin update-upstream build build-all install install-all checksum bump-all clean
-
-help:
-	@echo 'make prepare                  Link custom templates and supporting files'
-	@echo 'make bootstrap                Bootstrap xbps-src'
-	@echo 'make update                   Pull origin and upstream, bump packages, install updates'
-	@echo 'make update-origin            Pull changes from your fork'
-	@echo 'make update-upstream          Pull changes from upstream'
-	@echo 'make build PKG=name           Build a package'
-	@echo 'make build-all                Build all custom packages'
-	@echo 'make install PKG=name         Build and install a package'
-	@echo 'make install-all              Build and install all custom packages'
-	@echo 'make checksum PKG=name        Update a custom template checksum'
-	@echo 'make bump-all                 Update custom package versions and checksums'
-	@echo 'make clean                    Uninstall archived packages and remove their build data'
-
-prepare:
-	for pkg_dir in srcpkgs/*; do \
-		mkdir -p "../$$pkg_dir"; \
-		for file in "$$pkg_dir"/*; do \
-			ln -sfnr "$$file" "../$$file"; \
-		done; \
-	done
-
-bootstrap:
+# Bootstrap void-packages xbps repository. This needs to be run on fresh install machines.
+.PHONY: xbps-bootstrap
+xbps-bootstrap:
 	cd .. && ./xbps-src binary-bootstrap
 
-update-origin:
-	cd .. && git pull origin master
+# My personal packages are kept under ./srcpkgs and symlinked to actual place in void-packages. This needs to be run
+# each time I change structure of my personal template files to ensure links are in sync.
+.PHONY: stow-packages
+stow-packages:
+	./scripts/stow_packages.sh
 
-update-upstream:
-	cd .. && git pull upstream master
+# Update this void-packages repository to the latest on all fronts:
+#   - Pull my own fork
+#   - Pull upstream
+#   - Bump packages that can be automatically bumped
+#   - Build packages that needs to be rebuilt
+.PHONY: update-void-packages
+update-void-packages:
+	./scripts/update_void_packages.sh
 
-update:
-	$(MAKE) update-origin
-	$(MAKE) update-upstream
-	$(MAKE) bump-all
-	$(MAKE) install-all
-
-build: prepare
-	cd .. && ./xbps-src pkg $(PKG)
-
-build-all: prepare
-	cd .. && for pkg in pionix/srcpkgs/*; do ./xbps-src pkg "$${pkg##*/}" || exit; done
-
-install: build
-	cd .. && xi $(PKG)
-
-install-all: build-all
+# Install all of my personal templates.
+.PHONY: install
+install: stow-packages
+	# `make` expands these wildcards at invoke time, so `cd ..` doesn't affect it.
 	cd .. && xi $(notdir $(wildcard srcpkgs/*))
 
-checksum: prepare
+# Update checksum of a template using `xgensum`.
+.PHONY: checksum
+checksum: stow-packages
 	cd .. && xgensum -fi pionix/srcpkgs/$(PKG)/template
 
-bump-all:
-	./scripts/bump-brave.sh
-
+# Uninstall archieved packages and remove build artifacts.
+.PHONY: clean
 clean:
-	cd .. && for pkg_dir in pionix/archive/*; do \
-		pkg=$${pkg_dir##*/}; \
-		if xbps-query "$$pkg" >/dev/null 2>&1; then \
-			sudo xbps-remove -y "$$pkg" || exit; \
-		fi; \
-		rm -rf hostdir/sources/"$$pkg"-[0-9]* masterdir-*/builddir/"$$pkg"-[0-9]* masterdir-*/destdir/"$$pkg"-[0-9]*; \
-		find hostdir -type f -name "$$pkg-[0-9]*.xbps*" -delete; \
-		sudo find /var/cache/xbps -maxdepth 1 -type f -name "$$pkg-[0-9]*.xbps*" -delete; \
-	done
-	find ../hostdir/binpkgs -name '*-repodata' -printf '%h\n' | sort -u | xargs -r -n1 xbps-rindex -c
+	./scripts/clean.sh

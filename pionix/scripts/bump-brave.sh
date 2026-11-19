@@ -1,17 +1,11 @@
-#!/bin/sh
-set -e
-cd "$(dirname "$0")/.."
+#!/usr/bin/env bash
 
-template=srcpkgs/brave-origin/template
-latest=$(curl -fsSL https://versions.brave.com/latest/origin-nightly-linux-x64.version)
-current=$(sed -n 's/^version=//p' "$template")
+set -euo pipefail
 
-if [ "$latest" = "$current" ]; then
-    echo "brave-origin: already at $current"
-    exit 0
-fi
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+readonly SCRIPT_DIR
 
-sed -i -e "s/^version=.*/version=$latest/" -e 's/^revision=.*/revision=1/' "$template"
-make checksum PKG=brave-origin
-git commit --only -m "new: update brave-origin $current -> $latest" -- "$template"
-echo "brave-origin: $current -> $latest"
+main() {
+}
+
+main "$@"
